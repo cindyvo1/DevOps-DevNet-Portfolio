@@ -15,3 +15,11 @@ Een eerste Flask microservice bouwen en lokaal uitvoeren.
 
 **Resultaat:**  
 Een werkende microservice die een HTTP-response terugstuurt.
+
+## Docker
+
+Deze Flask microservice werd verpakt in een Docker image
+en uitgevoerd als container.
+
+De container exposeert poort 5000 en is lokaal bereikbaar via:
+http://localhost:5000
