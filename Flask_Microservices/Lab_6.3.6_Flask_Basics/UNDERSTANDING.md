@@ -55,3 +55,36 @@ Deze microservice kan later:
 - in een Docker container geplaatst worden
 - automatisch gebouwd worden via Jenkins
 - deel uitmaken van een CI/CD pipeline
+
+---
+
+## Docker – uitbreiding op dit lab
+
+### Waarom Docker gebruiken voor deze Flask microservice?
+Docker zorgt ervoor dat deze Flask microservice
+overal op dezelfde manier kan draaien,
+ongeacht het besturingssysteem of de omgeving.
+
+### Wat heb ik gedaan met Docker?
+- Een Dockerfile aangemaakt voor deze Flask-app
+- Een Docker image gebouwd met `docker build`
+- Een container gestart met `docker run`
+- De applicatie getest via http://localhost:5000
+
+### Wat is het verschil tussen Flask lokaal en in Docker?
+- Lokaal draait Flask rechtstreeks op de VM
+- In Docker draait Flask in een container met een eigen omgeving
+
+De functionaliteit is hetzelfde,
+maar Docker maakt de applicatie reproduceerbaar en portable.
+
+### Wat betekent poort-mapping (`-p 5000:5000`)?
+Poort 5000 van de container wordt gekoppeld
+aan poort 5000 van de host (DEVASC VM),
+waardoor de applicatie bereikbaar is via localhost.
+
+### Link met DevOps
+Door Flask te combineren met Docker,
+kan deze microservice eenvoudig geïntegreerd worden
+in een CI/CD pipeline (bijvoorbeeld Jenkins).
+
