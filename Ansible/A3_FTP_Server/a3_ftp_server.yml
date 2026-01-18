@@ -1,0 +1,43 @@
+---
+- name: A3 - FTP server deployment met Ansible
+  hosts: ftpservers
+  become: yes
+
+  vars:
+    ftp_package: vsftpd
+    ftp_service: vsftpd
+    ftp_upload_dir: /srv/ftp/upload
+
+  tasks:
+    - name: Zorg dat de apt cache up-to-date is (Debian/Ubuntu)
+      apt:
+        update_cache: yes
+      when: ansible_os_family == "Debian"
+
+    - name: Installeer de FTP-server (vsftpd)
+      apt:
+        name: "{{ ftp_package }}"
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Zorg dat de upload directory bestaat
+      file:
+        path: "{{ ftp_upload_dir }}"
+        state: directory
+        owner: root
+        group: root
+        mode: "0755"
+
+    - name: Plaats een welkomstbestand in de FTP-upload directory
+      copy:
+        src: files/welcome.txt
+        dest: "{{ ftp_upload_dir }}/welcome.txt"
+        owner: root
+        group: root
+        mode: "0644"
+
+    - name: Zorg dat de FTP-server service actief is en automatisch start
+      service:
+        name: "{{ ftp_service }}"
+        state: started
+        enabled: yes

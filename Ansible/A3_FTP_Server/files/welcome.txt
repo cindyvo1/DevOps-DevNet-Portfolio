@@ -1,0 +1,2 @@
+Dit is het A3 FTP-server experiment.
+De upload directory is automatisch aangemaakt met een Ansible playbook.
