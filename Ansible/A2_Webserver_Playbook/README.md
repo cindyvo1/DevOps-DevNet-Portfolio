@@ -4,9 +4,14 @@
 Met dit experiment toon ik hoe je met Ansible automatisch een webserver (nginx) kunt installeren en configureren op een Linux-server.
 
 ## Structuur
-- `hosts.ini` – Ansible inventory met de *webservers* groep.
-- `a2_webserver.yml` – hoofd-playbook dat nginx installeert, de webroot aanmaakt en een custom `index.html` plaatst.
-- `files/index.html` – eenvoudige webpagina die door Ansible wordt gedeployed.
+- `hosts.ini` – Ansible inventory met de groep **webservers** (hier: localhost).
+- `a2_webserver.yml` – hoofd-playbook dat:
+  - de apt-cache bijwerkt,
+  - nginx installeert,
+  - de webroot controleert/aanmaakt,
+  - een custom `index.html` kopieert,
+  - en de nginx-service start en enabled.
+- `files/index.html` – eenvoudige webpagina die via Ansible wordt gedeployed.
 
 ## Hoe uit te voeren
 

@@ -9,18 +9,18 @@
     web_root: /var/www/html
 
   tasks:
-    - name: Zorg dat apt cache up-to-date is
+    - name: Zorg dat de apt cache up-to-date is (Debian/Ubuntu)
       apt:
         update_cache: yes
       when: ansible_os_family == "Debian"
 
-    - name: Installeer webserver pakket
+    - name: Installeer de webserver (nginx)
       apt:
         name: "{{ web_package }}"
         state: present
       when: ansible_os_family == "Debian"
 
-    - name: Maak web root directory aan (voor de zekerheid)
+    - name: Zorg dat de webroot directory bestaat
       file:
         path: "{{ web_root }}"
         state: directory
@@ -28,7 +28,7 @@
         group: www-data
         mode: "0755"
 
-    - name: Plaats custom index.html
+    - name: Plaats de custom index.html
       copy:
         src: files/index.html
         dest: "{{ web_root }}/index.html"
@@ -36,7 +36,7 @@
         group: www-data
         mode: "0644"
 
-    - name: Zorg dat de webserver service actief en enabled is
+    - name: Zorg dat de webserver service actief is en automatisch start
       service:
         name: "{{ web_service }}"
         state: started
