@@ -1,0 +1,43 @@
+---
+- name: A2 - Webserver deployment met Ansible
+  hosts: webservers
+  become: yes
+
+  vars:
+    web_package: nginx
+    web_service: nginx
+    web_root: /var/www/html
+
+  tasks:
+    - name: Zorg dat apt cache up-to-date is
+      apt:
+        update_cache: yes
+      when: ansible_os_family == "Debian"
+
+    - name: Installeer webserver pakket
+      apt:
+        name: "{{ web_package }}"
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Maak web root directory aan (voor de zekerheid)
+      file:
+        path: "{{ web_root }}"
+        state: directory
+        owner: www-data
+        group: www-data
+        mode: "0755"
+
+    - name: Plaats custom index.html
+      copy:
+        src: files/index.html
+        dest: "{{ web_root }}/index.html"
+        owner: www-data
+        group: www-data
+        mode: "0644"
+
+    - name: Zorg dat de webserver service actief en enabled is
+      service:
+        name: "{{ web_service }}"
+        state: started
+        enabled: yes
